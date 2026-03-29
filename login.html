@@ -20,7 +20,7 @@ function login() {
   let found = users.find(u => u.username === user && u.password === pass);
   if (found) {
     localStorage.setItem('loggedIn', user);
-    window.location.href = './index.html';
+    window.location.href = '/normal/index.html';
   } else {
     alert('Wrong username ya password!');
   }
