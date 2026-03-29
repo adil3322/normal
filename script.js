@@ -1,5 +1,5 @@
 
-async function addStudent(){
+
 let name=document.getElementById('name').value;
 let course=document.getElementById('course').value;
 
