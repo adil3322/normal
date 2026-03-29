@@ -1,10 +1,10 @@
 if (!localStorage.getItem('loggedIn')) {
-  window.location.href = './login.html';
+  window.location.href = '/normal/login.html';
 }
 
 function logout() {
   localStorage.removeItem('loggedIn');
-  window.location.href = './login.html';
+  window.location.href = '/normal/login.html';
 }
 
 let students = JSON.parse(localStorage.getItem('students') || '[]');
