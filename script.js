@@ -1,4 +1,11 @@
+if (!localStorage.getItem('loggedIn')) {
+  window.location.href = './login.html';
+}
 
+function logout() {
+  localStorage.removeItem('loggedIn');
+  window.location.href = './login.html';
+}
 
 let students = JSON.parse(localStorage.getItem('students') || '[]');
 let nextId = students.length ? Math.max(...students.map(s => s.id)) + 1 : 1;
