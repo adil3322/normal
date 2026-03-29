@@ -1,28 +1,35 @@
 
 
-let name=document.getElementById('name').value;
-let course=document.getElementById('course').value;
+let students = JSON.parse(localStorage.getItem('students') || '[]');
+let nextId = students.length ? Math.max(...students.map(s => s.id)) + 1 : 1;
 
-await fetch('/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,course})});
-load();
+function addStudent() {
+  let name = document.getElementById('name').value.trim();
+  let course = document.getElementById('course').value.trim();
+  if (!name || !course) return alert('Name aur Course dono bharo!');
+
+  students.push({ id: nextId++, name, course });
+  localStorage.setItem('students', JSON.stringify(students));
+  document.getElementById('name').value = '';
+  document.getElementById('course').value = '';
+  load();
 }
 
-async function load(){
-let res=await fetch('/get');
-let data=await res.json();
-let list=document.getElementById('list');
-list.innerHTML="";
-data.forEach(s=>{
-list.innerHTML+=`<li class="list-group-item d-flex justify-content-between">
-${s.name} - ${s.course}
-<button onclick="del(${s.id})" class="btn btn-sm btn-danger">X</button>
-</li>`;
-});
+function load() {
+  let list = document.getElementById('list');
+  list.innerHTML = '';
+  students.forEach(s => {
+    list.innerHTML += `<li class="list-group-item d-flex justify-content-between">
+      ${s.name} - ${s.course}
+      <button onclick="del(${s.id})" class="btn btn-sm btn-danger">X</button>
+    </li>`;
+  });
 }
 
-async function del(id){
-await fetch('/delete/'+id,{method:'DELETE'});
-load();
+function del(id) {
+  students = students.filter(s => s.id !== id);
+  localStorage.setItem('students', JSON.stringify(students));
+  load();
 }
 
 load();
